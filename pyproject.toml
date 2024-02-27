@@ -9,6 +9,7 @@ packages = [{include = "todo_api.py"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 flask = "^3.0.2"
+flask-httpauth = "^4.8.0"
 
 
 [build-system]

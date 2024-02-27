@@ -63,6 +63,21 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-httpauth"
+version = "4.8.0"
+description = "HTTP authentication for Flask routes"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "Flask-HTTPAuth-4.8.0.tar.gz", hash = "sha256:66568a05bc73942c65f1e2201ae746295816dc009edd84b482c44c758d75097a"},
+    {file = "Flask_HTTPAuth-4.8.0-py3-none-any.whl", hash = "sha256:a58fedd09989b9975448eef04806b096a3964a7feeebc0a78831ff55685b62b0"},
+]
+
+[package.dependencies]
+flask = "*"
+
+[[package]]
 name = "itsdangerous"
 version = "2.1.2"
 description = "Safely pass data to untrusted environments and back."
@@ -183,4 +198,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "316d2970a8a78e6f3227f6895608b8268149395321209809cdc0fea2ccf2151a"
+content-hash = "08ff5a72917d239d76ae185b72935c9208b3d76096c392a3d8b75bceaae52417"
