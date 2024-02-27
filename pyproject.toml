@@ -12,6 +12,9 @@ flask = "^3.0.2"
 flask-httpauth = "^4.8.0"
 
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.2"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
