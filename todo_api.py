@@ -72,9 +72,11 @@ def update_task(task_id):
 def delete_task(task_id):
     global tasks
     user = auth.current_user()
-    tasks = [
-        task for task in tasks if task["id"] != task_id or task["created_by"] != user
-    ]
+    task = next((task for task in tasks if task["id"] == task_id and task["created_by"] == user), None)
+    if task:
+        tasks.remove(task)
+    else:
+        abort(404)
     return jsonify({"result": True})
 
 
