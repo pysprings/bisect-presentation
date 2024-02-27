@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "bisect-presentation"
+version = "0.1.0"
+description = ""
+authors = ["Ryan Freckleton <ryan.freckleton@gmail.com>"]
+readme = "README.md"
+packages = [{include = "todo_api.py"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^3.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
