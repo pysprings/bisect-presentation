@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, abort
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 
 # In-memory database for the purpose of this example
 tasks = []
