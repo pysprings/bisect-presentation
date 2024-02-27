@@ -4,15 +4,14 @@ from flask_httpauth import HTTPBasicAuth
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 
-users = {
-    "john": "hello",
-    "susan": "bye"
-}
+users = {"john": "hello", "susan": "bye"}
+
 
 @auth.verify_password
 def verify_password(username, password):
     if username in users and users[username] == password:
         return username
+
 
 # In-memory database for the purpose of this example
 tasks = []
@@ -21,7 +20,9 @@ tasks = []
 @app.route("/tasks", methods=["GET"])
 @auth.login_required
 def get_tasks():
-    return jsonify({"tasks": tasks})
+    user = auth.current_user()
+    user_tasks = [task for task in tasks if task["created_by"] == user]
+    return jsonify({"tasks": user_tasks})
 
 
 @app.route("/tasks", methods=["POST"])
@@ -29,11 +30,13 @@ def get_tasks():
 def create_task():
     if not request.json or "title" not in request.json:
         abort(400)
+    user = auth.current_user()
     task = {
         "id": len(tasks) + 1,
         "title": request.json["title"],
         "description": request.json.get("description", ""),
         "done": False,
+        "created_by": user,
     }
     tasks.append(task)
     return jsonify({"task": task}), 201
@@ -43,6 +46,7 @@ def create_task():
 @auth.login_required
 def get_task(task_id):
     task = next((task for task in tasks if task["id"] == task_id), None)
+    user = auth.current_user()
     if task is None:
         abort(404)
     return jsonify({"task": task})
@@ -52,6 +56,7 @@ def get_task(task_id):
 @auth.login_required
 def update_task(task_id):
     task = next((task for task in tasks if task["id"] == task_id), None)
+    user = auth.current_user()
     if task is None:
         abort(404)
     if not request.json:
@@ -66,7 +71,10 @@ def update_task(task_id):
 @auth.login_required
 def delete_task(task_id):
     global tasks
-    tasks = [task for task in tasks if task["id"] != task_id]
+    user = auth.current_user()
+    tasks = [
+        task for task in tasks if task["id"] != task_id or task["created_by"] != user
+    ]
     return jsonify({"result": True})
 
 
