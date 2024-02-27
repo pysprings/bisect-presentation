@@ -19,11 +19,13 @@ tasks = []
 
 
 @app.route("/tasks", methods=["GET"])
+@auth.login_required
 def get_tasks():
     return jsonify({"tasks": tasks})
 
 
 @app.route("/tasks", methods=["POST"])
+@auth.login_required
 def create_task():
     if not request.json or "title" not in request.json:
         abort(400)
@@ -38,6 +40,7 @@ def create_task():
 
 
 @app.route("/tasks/<int:task_id>", methods=["GET"])
+@auth.login_required
 def get_task(task_id):
     task = next((task for task in tasks if task["id"] == task_id), None)
     if task is None:
@@ -46,6 +49,7 @@ def get_task(task_id):
 
 
 @app.route("/tasks/<int:task_id>", methods=["PUT"])
+@auth.login_required
 def update_task(task_id):
     task = next((task for task in tasks if task["id"] == task_id), None)
     if task is None:
@@ -59,6 +63,7 @@ def update_task(task_id):
 
 
 @app.route("/tasks/<int:task_id>", methods=["DELETE"])
+@auth.login_required
 def delete_task(task_id):
     global tasks
     tasks = [task for task in tasks if task["id"] != task_id]
